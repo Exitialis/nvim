@@ -5,19 +5,6 @@ formatters.setup {
 }
 
 local lsp_manager = require "lvim.lsp.manager"
-lsp_manager.setup("golangci_lint_ls", {
-  on_init = require("lvim.lsp").common_on_init,
-  capabilities = require("lvim.lsp").common_capabilities(),
-})
-
--- Use which-key to add extra bindings with the leader-key prefix
-lvim.builtin.which_key.mappings["G"] = {
-  name = "+Go",
-  g = { "<cmd>GoGenerate %<cr>", "Go generate file" },
-  i = { "<cmd>GoIfErr <cr>", "If err" },
-  d = { "<cmd>lua require('dap-go').debug_test()<cr>", "Debug Test" }
-}
-
 lsp_manager.setup("gopls", {
   on_attach = function(client, bufnr)
     require("lvim.lsp").common_on_attach(client, bufnr)
@@ -38,6 +25,19 @@ lsp_manager.setup("gopls", {
     },
   },
 })
+
+lsp_manager.setup("golangci_lint_ls", {
+  on_init = require("lvim.lsp").common_on_init,
+  capabilities = require("lvim.lsp").common_capabilities(),
+})
+
+-- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["G"] = {
+  name = "+Go",
+  g = { "<cmd>GoGenerate %<cr>", "Go generate file" },
+  i = { "<cmd>GoIfErr <cr>", "If err" },
+  d = { "<cmd>lua require('dap-go').debug_test()<cr>", "Debug Test" }
+}
 
 local status_ok, gopher = pcall(require, "gopher")
 if not status_ok then
