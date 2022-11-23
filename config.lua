@@ -4,11 +4,22 @@ lvim.plugins = {
   { "ray-x/lsp_signature.nvim" },
   { "marko-cerovac/material.nvim" },
   { "olexsmir/gopher.nvim" },
-  { "leoluz/nvim-dap-go" }
+  { "leoluz/nvim-dap-go" },
+  { "kylechui/nvim-surround" },
+  { "glepnir/lspsaga.nvim", config = function()
+    local saga = require("lspsaga")
+
+    saga.init_lsp_saga({})
+  end }
 }
 
 -- init lsp_signature
 require "lsp_signature".setup({})
+
+-- init nvim-surround
+require "nvim-surround".setup({})
+
+lvim.lsp.buffer_mappings.normal_mode['gr'] = { "<cmd>Lspsaga lsp_finder<CR>", "Go to reference" }
 
 vim.g.material_style = "palenight"
 -- general
@@ -33,6 +44,9 @@ lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
+-- Diagnostics in edit mode too
+lvim.lsp.diagnostics.update_in_insert = true
+
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
@@ -49,6 +63,7 @@ lvim.builtin.treesitter.ensure_installed = {
 }
 
 lvim.builtin.which_key.mappings["o"] = { "<cmd>NvimTreeFocus<cr>", "Focus file tree" }
+lvim.builtin.which_key.mappings["la"] = { "<cmd>Lspsaga code_action<CR>", "Code action" }
 lvim.builtin.which_key.mappings["g"] = {
   name = "Git",
   j = { "<cmd>lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>", "Next Hunk" },
