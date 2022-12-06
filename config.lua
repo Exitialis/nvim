@@ -20,6 +20,7 @@ require "lsp_signature".setup({})
 require "nvim-surround".setup({})
 
 lvim.lsp.buffer_mappings.normal_mode['gr'] = { "<cmd>Lspsaga lsp_finder<CR>", "Go to reference" }
+vim.opt.clipboard = "unnamed,unnamedplus"
 
 vim.g.material_style = "palenight"
 -- general
@@ -89,6 +90,8 @@ lvim.builtin.which_key.mappings["g"] = {
     "Git Diff",
   },
 }
+lvim.builtin.which_key.mappings["dT"] = { "<Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+  "Set conditional breakpoint" }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enable = true
@@ -111,3 +114,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
   pattern = "qf",
 })
+
+-- remove dap-ui console because it always empty
+lvim.builtin.dap.ui.config.layouts[2].elements[2] = nil
+lvim.builtin.dap.ui.config.layouts[2].elements[1].size = 1
