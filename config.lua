@@ -10,7 +10,8 @@ lvim.plugins = {
     local saga = require("lspsaga")
 
     saga.init_lsp_saga({})
-  end }
+  end },
+  { "kdheepak/lazygit.nvim" },
 }
 
 -- init lsp_signature
@@ -20,6 +21,7 @@ require "lsp_signature".setup({})
 require "nvim-surround".setup({})
 
 lvim.lsp.buffer_mappings.normal_mode['gr'] = { "<cmd>Lspsaga lsp_finder<CR>", "Go to reference" }
+lvim.lsp.buffer_mappings.normal_mode['gg'] = { "<cmd>LazyGit<CR>", "Lazygit" }
 vim.opt.clipboard = "unnamed,unnamedplus"
 
 vim.g.material_style = "palenight"
@@ -116,5 +118,10 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- remove dap-ui console because it always empty
+lvim.builtin.dap.ui.config.layouts[1].elements = {
+  { id = "breakpoints", size = 0.17 },
+  { id = "scopes", size = 0.58 },
+  { id = "watches", size = 0.25 },
+}
 lvim.builtin.dap.ui.config.layouts[2].elements[2] = nil
 lvim.builtin.dap.ui.config.layouts[2].elements[1].size = 1
