@@ -6,11 +6,18 @@ lvim.plugins = {
   { "olexsmir/gopher.nvim" },
   { "leoluz/nvim-dap-go" },
   { "kylechui/nvim-surround" },
-  { "glepnir/lspsaga.nvim", config = function()
-    local saga = require("lspsaga")
+  {
+    "glepnir/lspsaga.nvim",
+    config = function()
+      local saga = require("lspsaga")
 
-    saga.init_lsp_saga({})
-  end },
+      saga.setup({})
+    end,
+    requires = {
+      { "nvim-tree/nvim-web-devicons" },
+      { "nvim-treesitter/nvim-treesitter" }
+    }
+  },
   { "kdheepak/lazygit.nvim" },
 }
 
@@ -92,7 +99,8 @@ lvim.builtin.which_key.mappings["g"] = {
     "Git Diff",
   },
 }
-lvim.builtin.which_key.mappings["dT"] = { "<Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+lvim.builtin.which_key.mappings["dT"] = {
+  "<Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
   "Set conditional breakpoint" }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -120,8 +128,8 @@ vim.api.nvim_create_autocmd("FileType", {
 -- remove dap-ui console because it always empty
 lvim.builtin.dap.ui.config.layouts[1].elements = {
   { id = "breakpoints", size = 0.17 },
-  { id = "scopes", size = 0.58 },
-  { id = "watches", size = 0.25 },
+  { id = "scopes",      size = 0.58 },
+  { id = "watches",     size = 0.25 },
 }
 lvim.builtin.dap.ui.config.layouts[2].elements[2] = nil
 lvim.builtin.dap.ui.config.layouts[2].elements[1].size = 1

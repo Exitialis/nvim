@@ -1,9 +1,3 @@
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
-  { command = "goimports", filetypes = { "go" } },
-  { command = "gofumpt", filetypes = { "go" } },
-}
-
 local lsp_manager = require "lvim.lsp.manager"
 lsp_manager.setup("gopls", {
   on_attach = function(client, bufnr)
@@ -18,19 +12,28 @@ lsp_manager.setup("gopls", {
       usePlaceholders = true,
       gofumpt = true,
       codelenses = {
-        generate = false,
+        generate = true,
         gc_details = true,
         test = true,
         tidy = true,
       },
+      analyses = {
+        fieldalignment = true, -- find structs that would use less memory if their fields were sorted
+        nilness = true,        -- check for redundant or impossible nil comparisons
+        shadow = true,         -- check for possible unintended shadowing of variables
+        unusedparams = true,   -- check for unused parameters of functions
+        unusedwrite = true,    -- checks for unused writes, an instances of writes to struct fields and arrays that are never read
+      }
     },
   },
 })
+lsp_manager.setup("golangci_lint_ls", {})
 
-lsp_manager.setup("golangci_lint_ls", {
-  on_init = require("lvim.lsp").common_on_init,
-  capabilities = require("lvim.lsp").common_capabilities(),
-})
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+  { command = "goimports", filetypes = { "go" } },
+  { command = "gofumpt",   filetypes = { "go" } },
+}
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["G"] = {
