@@ -41,7 +41,7 @@ vim.opt.clipboard = "unnamed,unnamedplus"
 vim.g.material_style = "palenight"
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save.enabled = true
+lvim.format_on_save.enabled = false
 lvim.colorscheme = "material"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
