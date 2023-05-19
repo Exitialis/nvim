@@ -25,7 +25,7 @@ lvim.plugins = {
       require("auto-save").setup {
       }
     end,
-  })
+  }),
 }
 
 -- init lsp_signature
@@ -47,8 +47,6 @@ lvim.colorscheme = "material"
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
-lvim.keys.normal_mode["<C-[>"] = ":bprevious<CR>"
-lvim.keys.normal_mode["<C-]>"] = ":bnext<CR>"
 lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
