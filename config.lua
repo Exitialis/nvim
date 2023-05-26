@@ -13,7 +13,7 @@ lvim.plugins = {
 
       saga.setup({})
     end,
-    requires = {
+    dependecies = {
       { "nvim-tree/nvim-web-devicons" },
       { "nvim-treesitter/nvim-treesitter" }
     }
@@ -26,6 +26,9 @@ lvim.plugins = {
       }
     end,
   }),
+  {
+    "Exafunction/codeium.vim"
+  },
 }
 
 -- init lsp_signature
@@ -38,21 +41,31 @@ lvim.lsp.buffer_mappings.normal_mode['gr'] = { "<cmd>Lspsaga lsp_finder<CR>", "G
 lvim.lsp.buffer_mappings.normal_mode['gg'] = { "<cmd>LazyGit<CR>", "Lazygit" }
 vim.opt.clipboard = "unnamed,unnamedplus"
 
+-- theme
 vim.g.material_style = "palenight"
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = false
 lvim.colorscheme = "material"
 
+-- remap back and forward location
+vim.keymap.set('n', '<C-[>', '<C-o>')
+vim.keymap.set('n', '<C-]>', '<C-i>')
+
+-- init codeium plugin
+vim.g.codeium_disable_keymaps = true
+vim.keymap.set('i', '<C-cr>', function () return vim.fn['codeium#Accept']() end, { expr = true })
+vim.keymap.set('n', '<C-cr>', function () return vim.fn['codeium#Accept']() end, { expr = true })
+vim.keymap.set('i', '<C-u>', function () return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+vim.keymap.set('n', '<C-u>', function () return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+vim.keymap.set('i', '<C-i>', function () return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+vim.keymap.set('n', '<C-i>', function () return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+vim.keymap.set('i', '<C-x>', function () return vim.fn['codeium#Clear']() end, { expr = true })
+
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
-lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
-lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
--- remap back and forward location
-vim.api.nvim_set_keymap('n', '<C-[>', '<C-o>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-]>', '<C-i>', { noremap = true })
 
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
@@ -62,7 +75,7 @@ lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
 -- Diagnostics in edit mode too
-lvim.lsp.diagnostics.update_in_insert = true
+vim.diagnostic.config({ update_in_insert = true })
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
