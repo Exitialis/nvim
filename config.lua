@@ -26,9 +26,6 @@ lvim.plugins = {
       }
     end,
   }),
-  {
-    "Exafunction/codeium.vim"
-  },
 }
 
 -- init lsp_signature
@@ -51,16 +48,6 @@ lvim.colorscheme = "material"
 -- remap back and forward location
 vim.keymap.set('n', '<C-[>', '<C-o>')
 vim.keymap.set('n', '<C-]>', '<C-i>')
-
--- init codeium plugin
-vim.g.codeium_disable_keymaps = true
-vim.keymap.set('i', '<C-cr>', function () return vim.fn['codeium#Accept']() end, { expr = true })
-vim.keymap.set('n', '<C-cr>', function () return vim.fn['codeium#Accept']() end, { expr = true })
-vim.keymap.set('i', '<C-u>', function () return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-vim.keymap.set('n', '<C-u>', function () return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-vim.keymap.set('i', '<C-i>', function () return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-vim.keymap.set('n', '<C-i>', function () return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-vim.keymap.set('i', '<C-x>', function () return vim.fn['codeium#Clear']() end, { expr = true })
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
