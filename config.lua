@@ -26,7 +26,24 @@ lvim.plugins = {
       }
     end,
   }),
+  { 'codota/tabnine-nvim',  build = "./dl_binaries.sh" },
+  {
+    'tzachar/cmp-tabnine',
+    build = './install.sh',
+    dependencies = 'hrsh7th/nvim-cmp',
+  },
 }
+
+-- config tabnine
+require('tabnine').setup({
+  disable_auto_comment = true,
+  accept_keymap = "<C-Cr>",
+  dismiss_keymap = "<C-x>",
+  debounce_ms = 800,
+  suggestion_color = { gui = "#808080", cterm = 244 },
+  exclude_filetypes = { "TelescopePrompt" },
+  log_file_path = nil, -- absolute path to Tabnine log file
+})
 
 -- init lsp_signature
 require "lsp_signature".setup({})
