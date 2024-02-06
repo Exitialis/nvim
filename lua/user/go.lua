@@ -70,4 +70,8 @@ if not dap_ok then
   return
 end
 
-dapgo.setup()
+dapgo.setup({
+  delve = {
+    build_flags = "-tags=integration",
+  },
+})

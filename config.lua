@@ -3,6 +3,7 @@ require "user.go"
 lvim.plugins = {
   { "ray-x/lsp_signature.nvim" },
   { "marko-cerovac/material.nvim" },
+  { "kdheepak/lazygit.nvim" },
   { "olexsmir/gopher.nvim" },
   { "leoluz/nvim-dap-go" },
   { "kylechui/nvim-surround" },
@@ -18,7 +19,6 @@ lvim.plugins = {
       { "nvim-treesitter/nvim-treesitter" }
     }
   },
-  { "kdheepak/lazygit.nvim" },
   ({
     "Pocco81/auto-save.nvim",
     config = function()
@@ -26,6 +26,12 @@ lvim.plugins = {
       }
     end,
   }),
+  {
+    "ThePrimeagen/refactoring.nvim",
+    config = function()
+      require("refactoring").setup()
+    end,
+  }
 }
 
 -- init lsp_signature
@@ -34,7 +40,7 @@ require "lsp_signature".setup({})
 -- init nvim-surround
 require "nvim-surround".setup({})
 
-lvim.lsp.buffer_mappings.normal_mode['gr'] = { "<cmd>Lspsaga lsp_finder<CR>", "Go to reference" }
+lvim.lsp.buffer_mappings.normal_mode['gr'] = { "<cmd>Lspsaga finder<CR>", "Go to reference" }
 lvim.lsp.buffer_mappings.normal_mode['gg'] = { "<cmd>LazyGit<CR>", "Lazygit" }
 vim.opt.clipboard = "unnamed,unnamedplus"
 
@@ -94,6 +100,7 @@ lvim.builtin.which_key.mappings["g"] = {
     "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
     "Undo Stage Hunk",
   },
+  g = { "<cmd>LazyGit<CR>", "Lazygit" },
   o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
   B = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
   c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
@@ -109,6 +116,14 @@ lvim.builtin.which_key.mappings["g"] = {
 lvim.builtin.which_key.mappings["dT"] = {
   "<Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
   "Set conditional breakpoint" }
+
+lvim.builtin.which_key.mappings["re"] = {
+  "<cmd>:Refactor extract<cr>", "Refactor extract"
+}
+
+lvim.builtin.which_key.mappings["rf"] = {
+  "<cmd>:Refactor extract_to_file<cr>", "Refactor extract to file"
+}
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enable = true
